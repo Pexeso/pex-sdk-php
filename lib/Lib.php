@@ -8,7 +8,7 @@ class Lib
 
     public static function open(string $client_id, string $client_secret): void
     {
-        self::$ffi = \FFI::load("Lib.h");
+        self::$ffi = \FFI::load(__DIR__ . "/Lib.h");
         if (!self::$ffi) {
             echo "failed to load library" . PHP_EOL;
         }
