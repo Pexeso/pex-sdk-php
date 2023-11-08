@@ -2,8 +2,6 @@
 
 namespace Pex;
 
-require_once 'defer.php';
-
 class Fingerprint
 {
     private string $bytes;

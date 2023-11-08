@@ -2,9 +2,6 @@
 
 namespace Pex;
 
-require_once "fingerprint.php";
-require_once "lib.php";
-
 class PexSearchClient extends Fingerprinter
 {
     private $client;

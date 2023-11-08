@@ -2,8 +2,6 @@
 
 namespace Pex;
 
-require_once 'error.php';
-
 class Lib
 {
     private static $ffi = null;
