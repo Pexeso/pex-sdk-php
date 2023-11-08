@@ -1,4 +1,13 @@
 {
-    "name": "Pexeso/pex-sdk-php",
-    "version": "4.0.5"
+    "name": "pexeso/pex-sdk-php",
+    "description": "PHP bindings for the Pex SDK",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Stepan Bujnak",
+            "email": "stepan@pex.com"
+        }
+    ],
+    "require": {}
 }
