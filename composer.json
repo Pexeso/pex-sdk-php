@@ -9,5 +9,10 @@
             "email": "stepan@pex.com"
         }
     ],
+    "autoload": {
+        "psr-4": {
+            "Pex\\": "lib/"
+        }
+    },
     "require": {}
 }

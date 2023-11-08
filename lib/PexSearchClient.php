@@ -5,43 +5,6 @@ namespace Pex;
 require_once "fingerprint.php";
 require_once "lib.php";
 
-class PexSearchRequest
-{
-    private Fingerprint $fingerprint;
-
-    public function __construct(Fingerprint $ft)
-    {
-        $this->fingerprint = $ft;
-    }
-
-    public function getFingerprint(): Fingerprint
-    {
-        return $this->fingerprint;
-    }
-}
-
-class PexSearchFuture
-{
-    private PexSearchClient $client;
-    private array $lookupIDs;
-
-    public function __construct(PexSearchClient $client, array $lookupIDs)
-    {
-        $this->client = $client;
-        $this->lookupIDs = $lookupIDs;
-    }
-
-    public function getLookupIDs(): array
-    {
-        return $this->lookupIDs;
-    }
-
-    public function get(): \stdClass
-    {
-        return $this->client->checkSearch($this->lookupIDs);
-    }
-}
-
 class PexSearchClient extends Fingerprinter
 {
     private $client;
