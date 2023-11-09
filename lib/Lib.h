@@ -1,5 +1,3 @@
-#define FFI_LIB "/usr/local/lib/libpexsdk.dylib"
-
 #include <stddef.h>
 
 // ----------------------------------------------------------------------------
