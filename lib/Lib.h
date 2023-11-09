@@ -1,9 +1,9 @@
 #ifdef __APPLE__
-#define FFI_LIB "libpexsdk.dylib"
+#define FFI_LIB "/usr/local/lib/libpexsdk.dylib"
 #endif
 
 #ifdef __linux__
-#define FFI_LIB "libpexsdk.so"
+#define FFI_LIB "/usr/local/lib/libpexsdk.so"
 #endif
 
 #include <stddef.h>
