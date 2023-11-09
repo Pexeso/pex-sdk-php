@@ -2,6 +2,9 @@
 
 namespace Pex;
 
+const PEX_SDK_MAJOR_VERSION = 4;
+const PEX_SDK_MINOR_VERSION = 0;
+
 class Lib
 {
     private static $ffi = null;
@@ -21,6 +24,10 @@ class Lib
         self::$ffi = \FFI::cdef(CDEF, $libPath);
         if (!self::$ffi) {
             echo "failed to load library" . PHP_EOL;
+        }
+
+        if (!self::$ffi->Pex_Version_IsCompatible(PEX_SDK_MAJOR_VERSION, PEX_SDK_MINOR_VERSION)) {
+            throw new Error("incompatible version", StatusCode::NotInitialized);
         }
 
         $init_status_code = self::$ffi->new("int");
