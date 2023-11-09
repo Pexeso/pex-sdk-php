@@ -6,7 +6,7 @@ class BaseClient extends Fingerprinter
 {
     protected $client;
 
-    public function __construct(int $searchType, string $clientID, string $clientSecret)
+    public function __construct(SearchType $searchType, string $clientID, string $clientSecret)
     {
         $defer = new Defer();
 
