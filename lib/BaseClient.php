@@ -110,7 +110,10 @@ class BaseClient extends Fingerprinter
         Error::checkStatus($status);
 
         $json = Lib::get()->Pex_CheckSearchResult_GetJSON($checkRes);
-        return json_decode($json);
+        $dec = json_decode($json);
+
+        $dec['lookup_ids'] = $this->lookup_ids;
+        return $dec;
     }
 
     public function mock(): void
