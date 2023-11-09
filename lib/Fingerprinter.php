@@ -4,7 +4,7 @@ namespace Pex;
 
 class Fingerprinter
 {
-    public function fingerprintFile(string $input, FingerprintType $ftType = FingerprintType::All): Fingerprint
+    public function fingerprintFile(string $input, array $ftType = []): Fingerprint
     {
         $defer = new Defer();
 
@@ -19,7 +19,7 @@ class Fingerprinter
         Error::checkMemory($status);
         $defer->add(fn () => Lib::get()->Pex_Status_Delete(\FFI::addr($status)));
 
-        Lib::get()->Pex_Fingerprint_File($input, $buffer, $status, $ftType);
+        Lib::get()->Pex_Fingerprint_File($input, $buffer, $status, $this->convertTypes($ftType));
         Error::checkStatus($status);
 
         return new Fingerprint(\FFI::string(
@@ -28,7 +28,7 @@ class Fingerprinter
         ));
     }
 
-    public function fingerprintBuffer(string $input, FingerprintType $ftType = FingerprintType::All): Fingerprint
+    public function fingerprintBuffer(string $input, array $ftType = []): Fingerprint
     {
         $defer = new Defer();
 
@@ -49,12 +49,25 @@ class Fingerprinter
 
         Lib::get()->Pex_Buffer_Set($inputBuffer, sizeof($inputBuffer));
 
-        Lib::get()->Pex_Fingerprint_Buffer($inputBuffer, $outputBuffer, $status, $ftType);
+        Lib::get()->Pex_Fingerprint_Buffer($inputBuffer, $outputBuffer, $status, $this->convertTypes($ftType));
         Error::checkStatus($status);
 
         return new Fingerprint(\FFI::string(
             Lib::get()->Pex_Buffer_GetData($outputBuffer),
             Lib::get()->Pex_Buffer_GetSize($outputBuffer),
         ));
+    }
+
+    private function convertTypes(array $ftTypes): int
+    {
+        if (!$ftTypes) {
+            return FingerprintType::Audio->value | FingerprintType::Melody->value;
+        }
+
+        $val = 0;
+        foreach ($ftTypes as $t) {
+            $val |= $t->value;
+        }
+        return $val;
     }
 }

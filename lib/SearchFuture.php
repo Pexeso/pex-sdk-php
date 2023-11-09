@@ -2,12 +2,12 @@
 
 namespace Pex;
 
-class PexSearchFuture
+class SearchFuture
 {
-    private PexSearchClient $client;
+    private BaseClient $client;
     private array $lookupIDs;
 
-    public function __construct(PexSearchClient $client, array $lookupIDs)
+    public function __construct(BaseClient $client, array $lookupIDs)
     {
         $this->client = $client;
         $this->lookupIDs = $lookupIDs;

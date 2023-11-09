@@ -2,6 +2,9 @@
 
 namespace Pex;
 
+const PEX_SDK_MAJOR_VERSION = 4;
+const PEX_SDK_MINOR_VERSION = 0;
+
 class Lib
 {
     private static $ffi = null;
@@ -21,6 +24,10 @@ class Lib
         self::$ffi = \FFI::cdef(CDEF, $libPath);
         if (!self::$ffi) {
             echo "failed to load library" . PHP_EOL;
+        }
+
+        if (!self::$ffi->Pex_Version_IsCompatible(PEX_SDK_MAJOR_VERSION, PEX_SDK_MINOR_VERSION)) {
+            throw new Error("incompatible version", StatusCode::NotInitialized);
         }
 
         $init_status_code = self::$ffi->new("int");
@@ -52,15 +59,9 @@ class Lib
 
 const CDEF = <<<CDEF
 
-// ----------------------------------------------------------------------------
-// Pex_Lock
-// ----------------------------------------------------------------------------
-
 void Pex_Lock();
 void Pex_Unlock();
 
-// ----------------------------------------------------------------------------
-// Pex_Init
 // ----------------------------------------------------------------------------
 
 void Pex_Init(const char *client_id, const char *client_secret,
@@ -68,8 +69,6 @@ void Pex_Init(const char *client_id, const char *client_secret,
               size_t status_message_size);
 void Pex_Cleanup();
 
-// ----------------------------------------------------------------------------
-// Pex_Status
 // ----------------------------------------------------------------------------
 
 typedef struct Pex_Status Pex_Status;
@@ -80,8 +79,6 @@ bool Pex_Status_OK(const Pex_Status *status);
 int Pex_Status_GetCode(const Pex_Status *status);
 const char *Pex_Status_GetMessage(const Pex_Status *status);
 
-// ----------------------------------------------------------------------------
-// Pex_Client
 // ----------------------------------------------------------------------------
 
 typedef struct Pex_Client Pex_Client;
@@ -98,8 +95,6 @@ void Pex_Client_Init(Pex_Client *c, Pex_ClientType type, const char *client_id,
                      const char *client_secret, Pex_Status *s);
 
 // ----------------------------------------------------------------------------
-// Pex_Buffer
-// ----------------------------------------------------------------------------
 
 typedef struct Pex_Buffer Pex_Buffer;
 
@@ -110,8 +105,6 @@ void Pex_Buffer_Set(Pex_Buffer *b, const void *buf, size_t size);
 const void *Pex_Buffer_GetData(const Pex_Buffer *b);
 size_t Pex_Buffer_GetSize(const Pex_Buffer *b);
 
-// ----------------------------------------------------------------------------
-// Pex_Fingerprint
 // ----------------------------------------------------------------------------
 
 typedef enum Pex_Fingerprint_Type {
@@ -129,8 +122,6 @@ void Pex_Fingerprint_Buffer(const Pex_Buffer *buf, Pex_Buffer *ft,
                             Pex_Status *status, int ft_types);
 
 // ----------------------------------------------------------------------------
-// Pex_StartSearchRequest
-// ----------------------------------------------------------------------------
 
 typedef struct Pex_StartSearchRequest Pex_StartSearchRequest;
 
@@ -140,8 +131,6 @@ void Pex_StartSearchRequest_Delete(Pex_StartSearchRequest **);
 void Pex_StartSearchRequest_SetFingerprint(Pex_StartSearchRequest *rq,
                                            const Pex_Buffer *ft, Pex_Status *s);
 
-// -----------------------------------------------------------------------------
-// Pex_StartSearchResult
 // -----------------------------------------------------------------------------
 
 typedef struct Pex_StartSearchResult Pex_StartSearchResult;
@@ -153,8 +142,6 @@ bool Pex_StartSearchResult_NextLookupID(const Pex_StartSearchResult *rs,
                                         size_t *idx, char const **lookup_id);
 
 // -----------------------------------------------------------------------------
-// Pex_CheckSearchRequest
-// -----------------------------------------------------------------------------
 
 typedef struct Pex_CheckSearchRequest Pex_CheckSearchRequest;
 
@@ -165,8 +152,6 @@ void Pex_CheckSearchRequest_AddLookupID(Pex_CheckSearchRequest *rq,
                                         const char *lookup_id);
 
 // -----------------------------------------------------------------------------
-// Pex_CheckSearchResult
-// -----------------------------------------------------------------------------
 
 typedef struct Pex_CheckSearchResult Pex_CheckSearchResult;
 
@@ -176,12 +161,23 @@ void Pex_CheckSearchResult_Delete(Pex_CheckSearchResult **);
 const char *Pex_CheckSearchResult_GetJSON(const Pex_CheckSearchResult *rs);
 
 // -----------------------------------------------------------------------------
-// Search
-// -----------------------------------------------------------------------------
 
 void Pex_StartSearch(Pex_Client *c, const Pex_StartSearchRequest *rq,
                      Pex_StartSearchResult *rs, Pex_Status *s);
 void Pex_CheckSearch(Pex_Client *c, const Pex_CheckSearchRequest *rq,
                      Pex_CheckSearchResult *rs, Pex_Status *s);
+
+// -----------------------------------------------------------------------------
+
+void Pex_Mockserver_InitClient(Pex_Client* c, const char* exe_path, Pex_Status* s);
+
+// -----------------------------------------------------------------------------
+
+void Pex_Ingest(Pex_Client* c, const char* provided_id, const Pex_Buffer* ft,
+                Pex_Status* status);
+
+// -----------------------------------------------------------------------------
+
+bool Pex_Version_IsCompatible(int major, int minor);
 
 CDEF;
