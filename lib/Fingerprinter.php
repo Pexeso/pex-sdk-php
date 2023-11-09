@@ -4,7 +4,7 @@ namespace Pex;
 
 class Fingerprinter
 {
-    public function fingerprintFile(string $input, FingerprintType $ftType = FingerprintType::All): Fingerprint
+    public function fingerprintFile(string $input, FingerprintType $ftType = FingerprintType::Audio | FingerprintType::Melody): Fingerprint
     {
         $defer = new Defer();
 
@@ -28,7 +28,7 @@ class Fingerprinter
         ));
     }
 
-    public function fingerprintBuffer(string $input, FingerprintType $ftType = FingerprintType::All): Fingerprint
+    public function fingerprintBuffer(string $input, FingerprintType $ftType = FingerprintType::Audio | FingerprintType::Melody): Fingerprint
     {
         $defer = new Defer();
 

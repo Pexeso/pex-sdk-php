@@ -22,7 +22,7 @@ class BaseClient extends Fingerprinter
         $this->client = Lib::get()->Pex_Client_New();
         Error::checkMemory($this->client);
 
-        Lib::get()->Pex_Client_Init($this->client, $searchType, $clientID, $clientSecret, $status);
+        Lib::get()->Pex_Client_Init($this->client, $searchType->value, $clientID, $clientSecret, $status);
         Error::checkStatus($status, function () use ($defer) {
             Lib::get()->Pex_Client_Delete(\FFI::addr($this->client));
             $defer->run();
