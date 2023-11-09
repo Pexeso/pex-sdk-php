@@ -7,7 +7,7 @@ const CLIENT_SECRET = "#YOUR_CLIENT_SECRET_HERE";
 const INPUT_FILE = "/path/to/file.mp3";
 
 // Initialize and authenticate the client.
-$client = new Pex\PexSearchClient(CLIENT_ID, CLIENT_SECRET);
+$client = new Pex\PrivateSearchClient(CLIENT_ID, CLIENT_SECRET);
 
 // Optionally mock the client. If a client is mocked, it will only communicate
 // with the local mockserver instead of production servers. This is useful for
@@ -31,8 +31,11 @@ $ft = $client->fingerprintFile(INPUT_FILE);
 // You can also specify a type of fingerprint you want to generate.
 $ft = $client->fingerprintFile(INPUT_FILE, [Pex\FingerprintType::Audio]);
 
+// Ingest it into your private catalog.
+$client->ingest("my_id_1", $ft);
+
 // Build the request.
-$req = new \Pex\PexSearchRequest($ft);
+$req = new \Pex\PrivateSearchRequest($ft);
 
 // Start the search.
 $fut = $client->startSearch($req);
