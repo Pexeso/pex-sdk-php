@@ -39,7 +39,7 @@ class BaseClient extends Fingerprinter
         Lib::close();
     }
 
-    protected function internalStartSearch(Fingerprint $ft): PexSearchFuture
+    protected function internalStartSearch(Fingerprint $ft): SearchFuture
     {
         $defer = new Defer();
 
@@ -80,7 +80,7 @@ class BaseClient extends Fingerprinter
             $lookupIDs[] = \FFI::string($lookupID);
         }
 
-        return new PexSearchFuture($this, $lookupIDs);
+        return new SearchFuture($this, $lookupIDs);
     }
 
     public function checkSearch(array $lookupIDs): \stdClass
