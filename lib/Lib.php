@@ -2,14 +2,6 @@
 
 namespace Pex;
 
-if (stristr(PHP_OS, 'DAR')) { // Darwin/Mac OS
-    define('FFI_LIB', '/usr/local/lib/libpexsdk.dylib');
-} elseif (stristr(PHP_OS, 'LIN')) { // Linux
-    define('FFI_LIB', '/usr/local/lib/libpexsdk.so');
-} else {
-    die("Unsupported OS");
-}
-
 class Lib
 {
     private static $ffi = null;
