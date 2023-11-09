@@ -184,4 +184,10 @@ void Pex_StartSearch(Pex_Client *c, const Pex_StartSearchRequest *rq,
 void Pex_CheckSearch(Pex_Client *c, const Pex_CheckSearchRequest *rq,
                      Pex_CheckSearchResult *rs, Pex_Status *s);
 
+// -----------------------------------------------------------------------------
+// Search
+// -----------------------------------------------------------------------------
+
+void Pex_Mockserver_InitClient(Pex_Client* c, const char* exe_path, Pex_Status* s);
+
 CDEF;
