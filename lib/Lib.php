@@ -185,9 +185,16 @@ void Pex_CheckSearch(Pex_Client *c, const Pex_CheckSearchRequest *rq,
                      Pex_CheckSearchResult *rs, Pex_Status *s);
 
 // -----------------------------------------------------------------------------
-// Search
+// Pex_Mockserver
 // -----------------------------------------------------------------------------
 
 void Pex_Mockserver_InitClient(Pex_Client* c, const char* exe_path, Pex_Status* s);
+
+// -----------------------------------------------------------------------------
+// Pex_Ingest
+// -----------------------------------------------------------------------------
+
+void Pex_Ingest(Pex_Client* c, const char* provided_id, const Pex_Buffer* ft,
+                Pex_Status* status);
 
 CDEF;
