@@ -112,7 +112,7 @@ class BaseClient extends Fingerprinter
         $json = Lib::get()->Pex_CheckSearchResult_GetJSON($checkRes);
         $dec = json_decode($json);
 
-        $dec['lookup_ids'] = $this->lookup_ids;
+        $dec['lookup_ids'] = $this->lookupIDs;
         return $dec;
     }
 
