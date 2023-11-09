@@ -6,7 +6,7 @@ class PrivateSearchClient extends BaseClient
 {
     public function __construct(string $clientID, string $clientSecret)
     {
-        parent::__construct(Lib::get()->Pex_PRIVATE_SEARCH, $clientID, $clientSecret);
+        parent::__construct(SearchType::PrivateSearch, $clientID, $clientSecret);
     }
 
     public function startSearch(PrivateSearchRequest $req): SearchFuture
