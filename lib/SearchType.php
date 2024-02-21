@@ -2,8 +2,8 @@
 
 namespace Pex;
 
-enum SearchType: int
+class SearchType
 {
-    case PrivateSearch  = 0;
-    case PexSearch = 1;
+    public const PrivateSearch = 0;
+    public const PexSearch = 1;
 }
