@@ -61,12 +61,12 @@ class Fingerprinter
     private function convertTypes(array $ftTypes): int
     {
         if (!$ftTypes) {
-            return FingerprintType::Audio->value | FingerprintType::Melody->value;
+            return FingerprintType::Audio | FingerprintType::Melody;
         }
 
         $val = 0;
         foreach ($ftTypes as $t) {
-            $val |= $t->value;
+            $val |= $t;
         }
         return $val;
     }

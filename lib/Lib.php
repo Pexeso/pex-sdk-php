@@ -41,7 +41,7 @@ class Lib
             \FFI::sizeof($init_status_message)
         );
 
-        if ($init_status_code->cdata != StatusCode::OK->value) {
+        if ($init_status_code->cdata != StatusCode::OK) {
             throw new Error(\FFI::string($init_status_message), $init_status_code->cdata);
         }
     }
