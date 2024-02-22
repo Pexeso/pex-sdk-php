@@ -3,11 +3,11 @@
 
 # Pex SDK for PHP
 
-Go bindings for the [Pex SDK](https://docs.search.pex.com).
+PHP bindings for the [Pex SDK](https://docs.search.pex.com).
 
 ### Installation
 
-You can install the Go language bindings like this:
+You can install the PHP language bindings like this:
 
     # Add the SDK bindings repository to your composer.json
     composer config repositories.repo-name vcs https://github.com/Pexeso/pex-sdk-php

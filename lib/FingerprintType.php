@@ -2,9 +2,9 @@
 
 namespace Pex;
 
-enum FingerprintType: int
+class FingerprintType
 {
-    case Video  = 1;
-    case Audio  = 2;
-    case Melody = 4;
+    public const Video  = 1;
+    public const Audio  = 2;
+    public const Melody = 4;
 }
