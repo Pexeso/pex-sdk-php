@@ -3,7 +3,7 @@
 namespace Pex;
 
 const PEX_SDK_MAJOR_VERSION = 4;
-const PEX_SDK_MINOR_VERSION = 0;
+const PEX_SDK_MINOR_VERSION = 1;
 
 class Lib
 {
@@ -123,6 +123,14 @@ void Pex_Fingerprint_Buffer(const Pex_Buffer *buf, Pex_Buffer *ft,
 
 // ----------------------------------------------------------------------------
 
+typedef enum Pex_SearchType {
+  Pex_SearchType_Default = 0,
+  Pex_SearchType_IdentifyMusic = 1,
+  Pex_SearchType_FindMatches = 2,
+} Pex_SearchType;
+
+// ----------------------------------------------------------------------------
+
 typedef struct Pex_StartSearchRequest Pex_StartSearchRequest;
 
 Pex_StartSearchRequest *Pex_StartSearchRequest_New();
@@ -130,6 +138,7 @@ void Pex_StartSearchRequest_Delete(Pex_StartSearchRequest **);
 
 void Pex_StartSearchRequest_SetFingerprint(Pex_StartSearchRequest *rq,
                                            const Pex_Buffer *ft, Pex_Status *s);
+void Pex_StartSearchRequest_SetType(Pex_StartSearchRequest* rq, Pex_SearchType type);
 
 // -----------------------------------------------------------------------------
 
