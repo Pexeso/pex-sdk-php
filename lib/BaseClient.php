@@ -39,7 +39,7 @@ class BaseClient extends Fingerprinter
         Lib::close();
     }
 
-    protected function internalStartSearch(Fingerprint $ft): SearchFuture
+    protected function internalStartSearch(Fingerprint $ft, int $type = 0): SearchFuture
     {
         $defer = new Defer();
 
@@ -66,6 +66,8 @@ class BaseClient extends Fingerprinter
 
         Lib::get()->Pex_StartSearchRequest_SetFingerprint($startReq, $buffer, $status);
         Error::checkStatus($status);
+
+        Lib::get()->Pex_StartSearchRequest_SetType($startReq, $type);
 
         Lib::get()->Pex_StartSearch($this->client, $startReq, $startRes, $status);
         Error::checkStatus($status);
