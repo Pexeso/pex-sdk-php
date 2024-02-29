@@ -17,7 +17,7 @@ class BaseClient extends Fingerprinter
 
         $status = Lib::get()->Pex_Status_New();
         Error::checkMemory($status);
-        $defer->add(function () {
+        $defer->add(function () use ($status) {
             Lib::get()->Pex_Status_Delete(\FFI::addr($status));
         });
 
@@ -50,25 +50,25 @@ class BaseClient extends Fingerprinter
 
         $startReq = Lib::get()->Pex_StartSearchRequest_New();
         Error::checkMemory($startReq);
-        $defer->add(function () {
+        $defer->add(function () use ($startReq) {
             Lib::get()->Pex_StartSearchRequest_Delete(\FFI::addr($startReq));
         });
 
         $startRes = Lib::get()->Pex_StartSearchResult_New();
         Error::checkMemory($startRes);
-        $defer->add(function () {
+        $defer->add(function () use ($startRes) {
             Lib::get()->Pex_StartSearchResult_Delete(\FFI::addr($startRes));
         });
 
         $buffer = Lib::get()->Pex_Buffer_New();
         Error::checkMemory($buffer);
-        $defer->add(function () {
+        $defer->add(function () use ($buffer) {
             Lib::get()->Pex_Buffer_Delete(\FFI::addr($buffer));
         });
 
         $status = Lib::get()->Pex_Status_New();
         Error::checkMemory($status);
-        $defer->add(function () {
+        $defer->add(function () use ($status) {
             Lib::get()->Pex_Status_Delete(\FFI::addr($status));
         });
 
@@ -104,19 +104,19 @@ class BaseClient extends Fingerprinter
 
         $checkReq = Lib::get()->Pex_CheckSearchRequest_New();
         Error::checkMemory($checkReq);
-        $defer->add(function () {
+        $defer->add(function () use ($checkReq) {
             Lib::get()->Pex_CheckSearchRequest_Delete(\FFI::addr($checkReq));
         });
 
         $checkRes = Lib::get()->Pex_CheckSearchResult_New();
         Error::checkMemory($checkRes);
-        $defer->add(function () {
+        $defer->add(function () use ($checkRes) {
             Lib::get()->Pex_CheckSearchResult_Delete(\FFI::addr($checkRes));
         });
 
         $status = Lib::get()->Pex_Status_New();
         Error::checkMemory($status);
-        $defer->add(function () {
+        $defer->add(function () use ($status) {
             Lib::get()->Pex_Status_Delete(\FFI::addr($status));
         });
 
@@ -143,7 +143,7 @@ class BaseClient extends Fingerprinter
 
         $status = Lib::get()->Pex_Status_New();
         Error::checkMemory($status);
-        $defer->add(function () {
+        $defer->add(function () use ($status) {
             Lib::get()->Pex_Status_Delete(\FFI::addr($status));
         });
 
