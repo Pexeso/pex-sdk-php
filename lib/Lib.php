@@ -11,20 +11,29 @@ class Lib
 
     public static function open(string $client_id, string $client_secret): void
     {
-        $libPath = '';
+        $paths = [
+            '/usr/local/lib/libpexsdk.dylib', // Mac OS
+            '/usr/local/lib/libpexsdk.so',    // Debian
+            '/usr/lib/libpexsdk.so',          // RedHat
+        ];
 
-        if (stristr(PHP_OS, 'DAR')) { // Darwin/Mac OS
-            $libPath = '/usr/local/lib/libpexsdk.dylib';
-        } elseif (stristr(PHP_OS, 'LIN')) { // Linux
-            $libPath = '/usr/local/lib/libpexsdk.so';
-        } else {
-            die("Unsupported OS");
+        foreach ($paths as $path) {
+            try {
+                self::internalOpen($path, $client_id, $client_secret);
+                return;
+            } catch (\FFI\Exception $e) {
+                // do nothing
+            }
         }
 
-        self::$ffi = \FFI::cdef(CDEF, $libPath);
         if (!self::$ffi) {
-            echo "failed to load library" . PHP_EOL;
+            throw new \Exception("failed to load the SDK core library");
         }
+    }
+
+    private static function internalOpen(string $libPath, string $client_id, string $client_secret): void
+    {
+        self::$ffi = \FFI::cdef(CDEF, $libPath);
 
         if (!self::$ffi->Pex_Version_IsCompatible(PEX_SDK_MAJOR_VERSION, PEX_SDK_MINOR_VERSION)) {
             throw new Error("incompatible version", StatusCode::NotInitialized);
