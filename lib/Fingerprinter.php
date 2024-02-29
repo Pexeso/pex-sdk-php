@@ -64,7 +64,7 @@ class Fingerprinter
 
         return new Fingerprint(\FFI::string(
             Lib::get()->Pex_Buffer_GetData($outputBuffer),
-            Lib::get()->Pex_Buffer_GetSize($outputBuffer),
+            Lib::get()->Pex_Buffer_GetSize($outputBuffer)
         ));
     }
 
