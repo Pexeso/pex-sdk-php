@@ -28,7 +28,7 @@ class Fingerprinter
 
         return new Fingerprint(\FFI::string(
             Lib::get()->Pex_Buffer_GetData($buffer),
-            Lib::get()->Pex_Buffer_GetSize($buffer),
+            Lib::get()->Pex_Buffer_GetSize($buffer)
         ));
     }
 
