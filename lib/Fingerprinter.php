@@ -13,11 +13,15 @@ class Fingerprinter
 
         $buffer = Lib::get()->Pex_Buffer_New();
         Error::checkMemory($buffer);
-        $defer->add(fn () => Lib::get()->Pex_Buffer_Delete(\FFI::addr($buffer)));
+        $defer->add(function () {
+            Lib::get()->Pex_Buffer_Delete(\FFI::addr($buffer));
+        });
 
         $status = Lib::get()->Pex_Status_New();
         Error::checkMemory($status);
-        $defer->add(fn () => Lib::get()->Pex_Status_Delete(\FFI::addr($status)));
+        $defer->add(function () {
+            Lib::get()->Pex_Status_Delete(\FFI::addr($status));
+        });
 
         Lib::get()->Pex_Fingerprint_File($input, $buffer, $status, $this->convertTypes($ftType));
         Error::checkStatus($status);
@@ -37,15 +41,21 @@ class Fingerprinter
 
         $inputBuffer = Lib::get()->Pex_Buffer_New();
         Error::checkMemory($inputBuffer);
-        $defer->add(fn () => Lib::get()->Pex_Buffer_Delete(\FFI::addr($inputBuffer)));
+        $defer->add(function () {
+            Lib::get()->Pex_Buffer_Delete(\FFI::addr($inputBuffer));
+        });
 
         $outputBuffer = Lib::get()->Pex_Buffer_New();
         Error::checkMemory($outputBuffer);
-        $defer->add(fn () => Lib::get()->Pex_Buffer_Delete(\FFI::addr($outputBuffer)));
+        $defer->add(function () {
+            Lib::get()->Pex_Buffer_Delete(\FFI::addr($outputBuffer));
+        });
 
         $status = Lib::get()->Pex_Status_New();
         Error::checkMemory($status);
-        $defer->add(fn () => Lib::get()->Pex_Status_Delete(\FFI::addr($status)));
+        $defer->add(function () {
+            Lib::get()->Pex_Status_Delete(\FFI::addr($status));
+        });
 
         Lib::get()->Pex_Buffer_Set($inputBuffer, sizeof($inputBuffer));
 

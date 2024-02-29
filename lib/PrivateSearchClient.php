@@ -23,11 +23,15 @@ class PrivateSearchClient extends BaseClient
 
         $buffer = Lib::get()->Pex_Buffer_New();
         Error::checkMemory($buffer);
-        $defer->add(fn () => Lib::get()->Pex_Buffer_Delete(\FFI::addr($buffer)));
+        $defer->add(function () {
+            Lib::get()->Pex_Buffer_Delete(\FFI::addr($buffer));
+        });
 
         $status = Lib::get()->Pex_Status_New();
         Error::checkMemory($status);
-        $defer->add(fn () => Lib::get()->Pex_Status_Delete(\FFI::addr($status)));
+        $defer->add(function () {
+            Lib::get()->Pex_Status_Delete(\FFI::addr($status));
+        });
 
         Lib::get()->Pex_Buffer_Set($buffer, $ft->getBytes(), strlen($ft->getBytes()));
 
