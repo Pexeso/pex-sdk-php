@@ -19,7 +19,7 @@ class Fingerprinter
         Error::checkMemory($status);
         $defer->add(fn () => Lib::get()->Pex_Status_Delete(\FFI::addr($status)));
 
-        Lib::get()->Pex_Fingerprint_File($input, $buffer, $status, $this->convertTypes($ftType));
+        Lib::get()->Pex_Fingerprint_File($input, $buffer, $status, self::convertTypes($ftType));
         Error::checkStatus($status);
 
         return new Fingerprint(\FFI::string(
@@ -49,7 +49,7 @@ class Fingerprinter
 
         Lib::get()->Pex_Buffer_Set($inputBuffer, sizeof($inputBuffer));
 
-        Lib::get()->Pex_Fingerprint_Buffer($inputBuffer, $outputBuffer, $status, $this->convertTypes($ftType));
+        Lib::get()->Pex_Fingerprint_Buffer($inputBuffer, $outputBuffer, $status, self::convertTypes($ftType));
         Error::checkStatus($status);
 
         return new Fingerprint(\FFI::string(
@@ -58,7 +58,7 @@ class Fingerprinter
         ));
     }
 
-    private function convertTypes(array $ftTypes): int
+    public static function convertTypes(array $ftTypes): int
     {
         if (!$ftTypes) {
             return FingerprintType::Audio | FingerprintType::Melody;
