@@ -3,7 +3,7 @@
 namespace Pex;
 
 const PEX_SDK_MAJOR_VERSION = 4;
-const PEX_SDK_MINOR_VERSION = 1;
+const PEX_SDK_MINOR_VERSION = 3;
 
 class Lib
 {
@@ -193,6 +193,8 @@ void Pex_Mockserver_InitClient(Pex_Client* c, const char* exe_path, Pex_Status* 
 
 void Pex_Ingest(Pex_Client* c, const char* provided_id, const Pex_Buffer* ft,
                 Pex_Status* status);
+void Pex_Archive(Pex_Client* c, const char* provided_id, int ft_types,
+                 Pex_Status* status);
 
 // -----------------------------------------------------------------------------
 
