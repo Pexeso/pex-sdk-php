@@ -34,4 +34,19 @@ class PrivateSearchClient extends BaseClient
         Lib::get()->Pex_Ingest($this->client, $providedID, $buffer, $status);
         Error::checkStatus($status);
     }
+
+    public function archive(string $providedID, array $ftTypes = []): void
+    {
+        $defer = new Defer();
+
+        Lib::get()->Pex_Lock();
+        $defer->add(Lib::get()->Pex_Unlock);
+
+        $status = Lib::get()->Pex_Status_New();
+        Error::checkMemory($status);
+        $defer->add(fn () => Lib::get()->Pex_Status_Delete(\FFI::addr($status)));
+
+        Lib::get()->Pex_Archive($this->client, $providedID, Fingerprinter::convertTypes($ftTypes), $status);
+        Error::checkStatus($status);
+    }
 }
