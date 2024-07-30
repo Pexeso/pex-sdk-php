@@ -4,8 +4,6 @@ namespace Pex;
 
 class BaseClient extends Fingerprinter
 {
-    protected $client;
-
     public function __construct(int $searchType, string $clientID, string $clientSecret)
     {
         $defer = new Defer();

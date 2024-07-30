@@ -4,6 +4,8 @@ namespace Pex;
 
 class Fingerprinter
 {
+    protected $client;
+
     public function fingerprintFile(string $input, array $ftType = []): Fingerprint
     {
         $defer = new Defer();
@@ -19,7 +21,8 @@ class Fingerprinter
         Error::checkMemory($status);
         $defer->add(fn () => Lib::get()->Pex_Status_Delete(\FFI::addr($status)));
 
-        Lib::get()->Pex_Fingerprint_File($input, $buffer, $status, self::convertTypes($ftType));
+        Lib::get()->Pex_FingerprintFile($this->client, $input, $buffer, $status,
+                                        self::convertTypes($ftType));
         Error::checkStatus($status);
 
         return new Fingerprint(\FFI::string(
@@ -49,7 +52,8 @@ class Fingerprinter
 
         Lib::get()->Pex_Buffer_Set($inputBuffer, sizeof($inputBuffer));
 
-        Lib::get()->Pex_Fingerprint_Buffer($inputBuffer, $outputBuffer, $status, self::convertTypes($ftType));
+        Lib::get()->Pex_FingerprintBuffer($this->client, $inputBuffer, $outputBuffer, $status,
+                                          self::convertTypes($ftType));
         Error::checkStatus($status);
 
         return new Fingerprint(\FFI::string(
