@@ -191,10 +191,31 @@ void Pex_Mockserver_InitClient(Pex_Client* c, const char* exe_path, Pex_Status* 
 
 // -----------------------------------------------------------------------------
 
+typedef struct Pex_ListRequest Pex_ListRequest;
+
+Pex_ListRequest *Pex_ListRequest_New();
+void Pex_ListRequest_Delete(Pex_ListRequest **);
+
+void Pex_ListRequest_SetAfter(Pex_ListRequest* rq, const char* after);
+void Pex_ListRequest_SetLimit(Pex_ListRequest* rq, int limit);
+
+// -----------------------------------------------------------------------------
+
+typedef struct Pex_ListResult Pex_ListResult;
+
+Pex_ListResult *Pex_ListResult_New();
+void Pex_ListResult_Delete(Pex_ListResult **);
+
+const char *Pex_ListResult_GetJSON(const Pex_ListResult* rs);
+
+// -----------------------------------------------------------------------------
+
 void Pex_Ingest(Pex_Client* c, const char* provided_id, const Pex_Buffer* ft,
                 Pex_Status* status);
 void Pex_Archive(Pex_Client* c, const char* provided_id, int ft_types,
                  Pex_Status* status);
+void Pex_List(Pex_Client* c, const Pex_ListRequest* rq, Pex_ListResult* rs,
+              Pex_Status* status);
 
 // -----------------------------------------------------------------------------
 
