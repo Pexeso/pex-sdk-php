@@ -7,7 +7,7 @@ class ListEntryRequest
     private string $after;
     private int $limit;
 
-    public function setAfter(string $after)
+    public function setAfter(string $after): void
     {
         $this->after = after;
     }
@@ -17,7 +17,7 @@ class ListEntryRequest
         return $this->after;
     }
 
-    public function setLimit(int $limit)
+    public function setLimit(int $limit): void
     {
         $this->limit = limit;
     }
