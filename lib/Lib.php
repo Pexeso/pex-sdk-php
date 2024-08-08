@@ -3,7 +3,7 @@
 namespace Pex;
 
 const PEX_SDK_MAJOR_VERSION = 4;
-const PEX_SDK_MINOR_VERSION = 3;
+const PEX_SDK_MINOR_VERSION = 4;
 
 class Lib
 {
@@ -129,6 +129,11 @@ void Pex_Fingerprint_File(const char *file, Pex_Buffer *ft, Pex_Status *status,
                           int ft_types);
 void Pex_Fingerprint_Buffer(const Pex_Buffer *buf, Pex_Buffer *ft,
                             Pex_Status *status, int ft_types);
+
+void Pex_FingerprintFile(Pex_Client* client, const char *file, Pex_Buffer *ft,
+                         Pex_Status *status, int ft_types);
+void Pex_FingerprintBuffer(Pex_Client* client, const Pex_Buffer *buf, Pex_Buffer *ft,
+                           Pex_Status *status, int ft_types);
 
 // ----------------------------------------------------------------------------
 
