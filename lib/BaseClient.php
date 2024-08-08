@@ -10,7 +10,20 @@ class BaseClient extends Fingerprinter
     {
         $defer = new Defer();
 
-        Lib::open($clientID, $clientSecret);
+        $initStatusCode = Lib::get()->new("int");
+        $initStatusMessage = Lib::get()->new("char[100]");
+
+        Lib::get()->Pex_Init(
+            $clientID,
+            $clientSecret,
+            \FFI::addr($initStatusCode),
+            $initStatusMessage,
+            \FFI::sizeof($initStatusMessage)
+        );
+
+        if ($initStatusCode->cdata != StatusCode::OK) {
+            throw new Error(\FFI::string($initStatusSessage), $initStatusCode->cdata);
+        }
 
         Lib::get()->Pex_Lock();
         $defer->add(Lib::get()->Pex_Unlock);
@@ -36,7 +49,7 @@ class BaseClient extends Fingerprinter
         Lib::get()->Pex_Client_Delete(\FFI::addr($this->client));
         Lib::get()->Pex_Unlock();
 
-        Lib::close();
+        Lib::get()->Pex_Cleanup();
     }
 
     protected function internalStartSearch(Fingerprint $ft, int $type = 0): SearchFuture
