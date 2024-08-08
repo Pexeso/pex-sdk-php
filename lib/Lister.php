@@ -4,17 +4,17 @@ namespace Pex;
 
 class Lister
 {
-    private \FFI\CData $client;
-    private string $endCursor;
+    private \FFI\CData $_client;
+    private string $_endCursor;
     private int $limit;
-    private bool $hasNextPage;
+    private bool $_hasNextPage;
 
     public function __construct(\FFI\CData $client, string $endCursor, int $limit)
     {
         $this->client = $client;
-        $this->endCursor = $endCursor;
         $this->limit = $limit;
-        $this->hasNextPage = true;
+        $this->_hasNextPage = true;
+        $this->_endCursor = $endCursor;
     }
 
     public function list(): array
@@ -36,7 +36,7 @@ class Lister
         Error::checkMemory($status);
         $defer->add(fn () => Lib::get()->Pex_Status_Delete(\FFI::addr($status)));
 
-        Lib::get()->Pex_ListRequest_SetAfter($req, $this->endCursor);
+        Lib::get()->Pex_ListRequest_SetAfter($req, $this->_endCursor);
         Lib::get()->Pex_ListRequest_SetLimit($req, $this->limit);
 
         Lib::get()->Pex_List($this->client, $req, $res, $status);
@@ -45,18 +45,18 @@ class Lister
         $json = Lib::get()->Pex_ListResult_GetJSON($res);
         $dec = json_decode($json);
 
-        $this->endCursor = $dec->end_cursor;
-        $this->hasNextPage = $dec->has_next_page;
+        $this->_endCursor = $dec->end_cursor;
+        $this->_hasNextPage = $dec->has_next_page;
         return $dec->entries;
     }
 
-    public function getHasNextPage(): bool
+    public function hasNextPage(): bool
     {
-        return $this->hasNextPage;
+        return $this->_hasNextPage;
     }
 
-    public function getEndCursor(): string
+    public function endCursor(): string
     {
-        return $this->endCursor;
+        return $this->_endCursor;
     }
 }
