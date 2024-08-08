@@ -49,4 +49,9 @@ class PrivateSearchClient extends BaseClient
         Lib::get()->Pex_Archive($this->client, $providedID, Fingerprinter::convertTypes($ftTypes), $status);
         Error::checkStatus($status);
     }
+
+    public function listEntries(ListEntriesRequest $req): Lister
+    {
+        return new Lister($this->client, $req->getAfter(), $req->getLimit());
+    }
 }

@@ -9,7 +9,7 @@ class Lib
 {
     private static $ffi = null;
 
-    public static function open(string $client_id, string $client_secret): void
+    public static function open(): void
     {
         $paths = [
             '/usr/local/lib/libpexsdk.dylib', // Mac OS
@@ -19,7 +19,7 @@ class Lib
 
         foreach ($paths as $path) {
             try {
-                self::internalOpen($path, $client_id, $client_secret);
+                self::internalOpen($path);
                 return;
             } catch (\FFI\Exception $e) {
                 // do nothing
@@ -31,33 +31,13 @@ class Lib
         }
     }
 
-    private static function internalOpen(string $libPath, string $client_id, string $client_secret): void
+    private static function internalOpen(string $libPath): void
     {
         self::$ffi = \FFI::cdef(CDEF, $libPath);
 
         if (!self::$ffi->Pex_Version_IsCompatible(PEX_SDK_MAJOR_VERSION, PEX_SDK_MINOR_VERSION)) {
             throw new Error("incompatible version", StatusCode::NotInitialized);
         }
-
-        $init_status_code = self::$ffi->new("int");
-        $init_status_message = self::$ffi->new("char[100]");
-
-        self::$ffi->Pex_Init(
-            $client_id,
-            $client_secret,
-            \FFI::addr($init_status_code),
-            $init_status_message,
-            \FFI::sizeof($init_status_message)
-        );
-
-        if ($init_status_code->cdata != StatusCode::OK) {
-            throw new Error(\FFI::string($init_status_message), $init_status_code->cdata);
-        }
-    }
-
-    public static function close(): void
-    {
-        self::$ffi->Pex_Cleanup();
     }
 
     public static function get(): \FFI
@@ -196,13 +176,36 @@ void Pex_Mockserver_InitClient(Pex_Client* c, const char* exe_path, Pex_Status* 
 
 // -----------------------------------------------------------------------------
 
+typedef struct Pex_ListRequest Pex_ListRequest;
+
+Pex_ListRequest *Pex_ListRequest_New();
+void Pex_ListRequest_Delete(Pex_ListRequest **);
+
+void Pex_ListRequest_SetAfter(Pex_ListRequest* rq, const char* after);
+void Pex_ListRequest_SetLimit(Pex_ListRequest* rq, int limit);
+
+// -----------------------------------------------------------------------------
+
+typedef struct Pex_ListResult Pex_ListResult;
+
+Pex_ListResult *Pex_ListResult_New();
+void Pex_ListResult_Delete(Pex_ListResult **);
+
+const char *Pex_ListResult_GetJSON(const Pex_ListResult* rs);
+
+// -----------------------------------------------------------------------------
+
 void Pex_Ingest(Pex_Client* c, const char* provided_id, const Pex_Buffer* ft,
                 Pex_Status* status);
 void Pex_Archive(Pex_Client* c, const char* provided_id, int ft_types,
                  Pex_Status* status);
+void Pex_List(Pex_Client* c, const Pex_ListRequest* rq, Pex_ListResult* rs,
+              Pex_Status* status);
 
 // -----------------------------------------------------------------------------
 
 bool Pex_Version_IsCompatible(int major, int minor);
 
 CDEF;
+
+Lib::open();
