@@ -2,10 +2,16 @@
 
 namespace Pex;
 
-class ListEntryRequest
+class ListEntriesRequest
 {
     private string $after;
     private int $limit;
+
+    public function __construct(string $after = "", int $limit = 0)
+    {
+        $this->after = $after;
+        $this->limit = $limit;
+    }
 
     public function setAfter(string $after): void
     {

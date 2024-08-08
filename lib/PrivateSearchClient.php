@@ -52,6 +52,6 @@ class PrivateSearchClient extends BaseClient
 
     public function listEntries(ListEntriesRequest $req): Lister
     {
-        return new Lister($this->client, $req->getNextCursor(), $req->getLimit());
+        return new Lister($this->client, $req->getAfter(), $req->getLimit());
     }
 }
