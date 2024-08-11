@@ -4,7 +4,7 @@ namespace Pex;
 
 class Lister
 {
-    private \FFI\CData $_client;
+    private \FFI\CData $client;
     private string $_endCursor;
     private int $limit;
     private bool $_hasNextPage;
