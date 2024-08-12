@@ -20,7 +20,7 @@ class BaseClient extends Fingerprinter
         );
 
         if ($initStatusCode->cdata != StatusCode::OK) {
-            throw new Error(\FFI::string($initStatusSessage), $initStatusCode->cdata);
+            throw new Error(\FFI::string($initStatusMessage), $initStatusCode->cdata);
         }
 
         Lib::get()->Pex_Lock();
