@@ -16,4 +16,5 @@ class StatusCode
     public const ConnectionError = 9;
     public const LookupFailed = 10;
     public const LookupTimedOut = 11;
+    public const ResourceExhausted = 12;
 }

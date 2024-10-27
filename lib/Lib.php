@@ -3,7 +3,7 @@
 namespace Pex;
 
 const PEX_SDK_MAJOR_VERSION = 4;
-const PEX_SDK_MINOR_VERSION = 4;
+const PEX_SDK_MINOR_VERSION = 5;
 
 class Lib
 {
@@ -67,6 +67,7 @@ void Pex_Status_Delete(Pex_Status **);
 bool Pex_Status_OK(const Pex_Status *status);
 int Pex_Status_GetCode(const Pex_Status *status);
 const char *Pex_Status_GetMessage(const Pex_Status *status);
+bool Pex_Status_IsRetryable(const Pex_Status *status);
 
 // ----------------------------------------------------------------------------
 

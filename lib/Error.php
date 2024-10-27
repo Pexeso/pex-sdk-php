@@ -4,6 +4,8 @@ namespace Pex;
 
 class Error extends \Exception
 {
+    private bool $retryable;
+
     public static function checkMemory($var, callable $cleanup = null): void
     {
         if (!$var) {
@@ -24,7 +26,14 @@ class Error extends \Exception
             $status_code = Lib::get()->Pex_Status_GetCode($status);
             $status_message = Lib::get()->Pex_Status_GetMessage($status);
 
-            throw new Error($status_message, $status_code);
+            $err = new Error($status_message, $status_code);
+            $err->retryable = Lib::get()->Pex_Status_IsRetryable($status);
+            throw $err;
         }
+    }
+
+    public function isRetryable(): bool
+    {
+        return $this->retryable;
     }
 }
