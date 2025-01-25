@@ -128,19 +128,4 @@ class BaseClient extends Fingerprinter
         $dec->lookup_ids = $lookupIDs;
         return $dec;
     }
-
-    public function mock(): void
-    {
-        $defer = new Defer();
-
-        Lib::get()->Pex_Lock();
-        $defer->add(Lib::get()->Pex_Unlock);
-
-        $status = Lib::get()->Pex_Status_New();
-        Error::checkMemory($status);
-        $defer->add(fn () => Lib::get()->Pex_Status_Delete(\FFI::addr($status)));
-
-        Lib::get()->Pex_Mockserver_InitClient($this->client, null, $status);
-        Error::checkStatus($status);
-    }
 }
