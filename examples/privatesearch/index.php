@@ -9,11 +9,6 @@ const INPUT_FILE = "/path/to/file.mp3";
 // Initialize and authenticate the client.
 $client = new Pex\PrivateSearchClient(CLIENT_ID, CLIENT_SECRET);
 
-// Optionally mock the client. If a client is mocked, it will only communicate
-// with the local mockserver instead of production servers. This is useful for
-// testing.
-$client->mock();
-
 // Fingerprint a file. You can also fingerprint a buffer with
 //
 //   client.FingerprintBuffer([]byte).
