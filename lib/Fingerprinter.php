@@ -65,7 +65,7 @@ class Fingerprinter
     public static function convertTypes(array $ftTypes): int
     {
         if (!$ftTypes) {
-            return FingerprintType::Audio | FingerprintType::Melody;
+            return FingerprintType::Audio | FingerprintType::Melody | FingerprintType::Phonetic;
         }
 
         $val = 0;
