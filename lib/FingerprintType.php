@@ -8,5 +8,5 @@ class FingerprintType
     public const Audio = 2;
     public const Melody = 4;
     public const Phonetic = 8;
-    public const Class = 16;
+    public const Classification = 16;
 }
