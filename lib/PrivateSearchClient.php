@@ -54,4 +54,27 @@ class PrivateSearchClient extends BaseClient
     {
         return new Lister($this->client, $req->getAfter(), $req->getLimit());
     }
+
+    public function getEntry(string $providedID): \stdClass {
+        $defer = new Defer();
+
+        Lib::get()->Pex_Lock();
+        $defer->add(Lib::get()->Pex_Unlock);
+
+        $status = Lib::get()->Pex_Status_New();
+        Error::checkMemory($status);
+        $defer->add(fn () => Lib::get()->Pex_Status_Delete(\FFI::addr($status)));
+
+        $buffer = Lib::get()->Pex_Buffer_New();
+        Error::checkMemory($buffer);
+        $defer->add(fn () => Lib::get()->Pex_Buffer_Delete(\FFI::addr($buffer)));
+
+        Lib::get()->Pex_Get($this->client, $providedID, $buffer, $status);
+        Error::checkStatus($status);
+
+        return json_decode(\FFI::string(
+            Lib::get()->Pex_Buffer_GetData($buffer),
+            Lib::get()->Pex_Buffer_GetSize($buffer),
+        ));
+    }
 }
