@@ -73,7 +73,7 @@ class PrivateSearchClient extends BaseClient
         Error::checkStatus($status);
 
         return json_decode(\FFI::string(
-            Lib::get()->Pex_Buffer_GetData($buffer),
+            \FFI::cast("const char*", Lib::get()->Pex_Buffer_GetData($buffer))
         ));
     }
 }
