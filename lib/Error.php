@@ -6,7 +6,7 @@ class Error extends \Exception
 {
     private bool $retryable;
 
-    public static function checkMemory($var, callable $cleanup = null): void
+    public static function checkMemory($var, ?callable $cleanup = null): void
     {
         if (!$var) {
             if ($cleanup) {
@@ -16,7 +16,7 @@ class Error extends \Exception
         }
     }
 
-    public static function checkStatus($status, callable $cleanup = null): void
+    public static function checkStatus($status, ?callable $cleanup = null): void
     {
         if (!Lib::get()->Pex_Status_OK($status)) {
             if ($cleanup) {

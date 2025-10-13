@@ -74,7 +74,6 @@ class PrivateSearchClient extends BaseClient
 
         return json_decode(\FFI::string(
             Lib::get()->Pex_Buffer_GetData($buffer),
-            Lib::get()->Pex_Buffer_GetSize($buffer),
         ));
     }
 }
