@@ -3,7 +3,7 @@
 namespace Pex;
 
 const PEX_SDK_MAJOR_VERSION = 4;
-const PEX_SDK_MINOR_VERSION = 5;
+const PEX_SDK_MINOR_VERSION = 6;
 
 class Lib
 {
