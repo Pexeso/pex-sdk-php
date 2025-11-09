@@ -3,7 +3,7 @@
 namespace Pex;
 
 const PEX_SDK_MAJOR_VERSION = 4;
-const PEX_SDK_MINOR_VERSION = 5;
+const PEX_SDK_MINOR_VERSION = 6;
 
 class Lib
 {
@@ -198,6 +198,8 @@ void Pex_Archive(Pex_Client* c, const char* provided_id, int ft_types,
                  Pex_Status* status);
 void Pex_List(Pex_Client* c, const Pex_ListRequest* rq, Pex_ListResult* rs,
               Pex_Status* status);
+void Pex_Get(Pex_Client* c, const char* provided_id, Pex_Buffer* out,
+             Pex_Status* status);
 
 // -----------------------------------------------------------------------------
 
