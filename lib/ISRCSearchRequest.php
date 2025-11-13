@@ -17,10 +17,10 @@ class ISRCSearchRequest
 
     public function getISRC(): string
     {
-        return $this->fingerprint;
+        return $this->isrc;
     }
 
-    public function getFTTypes(): int
+    public function getFTTypes(): array
     {
         return $this->ftTypes;
     }

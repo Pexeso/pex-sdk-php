@@ -68,7 +68,8 @@ class BaseClient extends Fingerprinter
         $defer->add(fn () => Lib::get()->Pex_Status_Delete(\FFI::addr($status)));
         
         if ($req instanceof ISRCSearchRequest) {
-            Lib::get()->Pex_StartSearchRequest_SetISRC($startReq, $req->getISRC(), $req->getFTTypes());
+            Lib::get()->Pex_StartSearchRequest_SetISRC(
+                $startReq, $req->getISRC(), Fingerprinter::convertTypes($req->getFTTypes()));
         } else if ($req instanceof PrivateSearchRequest || $req instanceof PexSearchRequest) {
             $buffer = Lib::get()->Pex_Buffer_New();
             Error::checkMemory($buffer);

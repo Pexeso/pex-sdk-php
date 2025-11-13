@@ -133,6 +133,8 @@ void Pex_StartSearchRequest_Delete(Pex_StartSearchRequest **);
 
 void Pex_StartSearchRequest_SetFingerprint(Pex_StartSearchRequest *rq,
                                            const Pex_Buffer *ft, Pex_Status *s);
+void Pex_StartSearchRequest_SetISRC(Pex_StartSearchRequest *rq,
+                                    const char *isrc, int ft_types);
 void Pex_StartSearchRequest_SetType(Pex_StartSearchRequest* rq, Pex_SearchType type);
 
 // -----------------------------------------------------------------------------
