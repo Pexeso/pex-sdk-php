@@ -11,7 +11,7 @@ class PrivateSearchClient extends BaseClient
 
     public function startSearch(PrivateSearchRequest $req): SearchFuture
     {
-        return $this->internalStartSearch($req->getFingerprint());
+        return $this->internalStartSearch($req);
     }
 
     public function ingest(string $providedID, Fingerprint $ft): void
