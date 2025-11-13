@@ -48,7 +48,7 @@ class BaseClient extends Fingerprinter
         Lib::get()->Pex_Cleanup();
     }
 
-    protected function internalStartSearch(Fingerprint $ft, int $type = 0): SearchFuture
+    protected function internalStartSearch(PexSearchRequest|ISRCSearchRequest|PrivateSearchRequest $req): SearchFuture
     {
         $defer = new Defer();
 
@@ -63,20 +63,26 @@ class BaseClient extends Fingerprinter
         Error::checkMemory($startRes);
         $defer->add(fn () => Lib::get()->Pex_StartSearchResult_Delete(\FFI::addr($startRes)));
 
-        $buffer = Lib::get()->Pex_Buffer_New();
-        Error::checkMemory($buffer);
-        $defer->add(fn () => Lib::get()->Pex_Buffer_Delete(\FFI::addr($buffer)));
-
         $status = Lib::get()->Pex_Status_New();
         Error::checkMemory($status);
         $defer->add(fn () => Lib::get()->Pex_Status_Delete(\FFI::addr($status)));
+        
+        if ($req instanceof ISRCSearchRequest) {
+            Lib::get()->Pex_StartSearchRequest_SetISRC($startReq, $req->getISRC(), $req->getFTTypes());
+        } else if ($req instanceof PrivateSearchRequest || $req instanceof PexSearchRequest) {
+            $buffer = Lib::get()->Pex_Buffer_New();
+            Error::checkMemory($buffer);
+            $defer->add(fn () => Lib::get()->Pex_Buffer_Delete(\FFI::addr($buffer)));
 
-        Lib::get()->Pex_Buffer_Set($buffer, $ft->getBytes(), strlen($ft->getBytes()));
+            Lib::get()->Pex_Buffer_Set($buffer, $ft->getBytes(), strlen($ft->getBytes()));
 
-        Lib::get()->Pex_StartSearchRequest_SetFingerprint($startReq, $buffer, $status);
-        Error::checkStatus($status);
+            Lib::get()->Pex_StartSearchRequest_SetFingerprint($startReq, $buffer, $status);
+            Error::checkStatus($status);
+        }
 
-        Lib::get()->Pex_StartSearchRequest_SetType($startReq, $type);
+        if ($req instanceof PexSearchRequest || $req instanceof ISRCSearchRequest) {
+            Lib::get()->Pex_StartSearchRequest_SetType($startReq, $req->getType());
+        }
 
         Lib::get()->Pex_StartSearch($this->client, $startReq, $startRes, $status);
         Error::checkStatus($status);
