@@ -13,4 +13,9 @@ class PexSearchClient extends BaseClient
     {
         return $this->internalStartSearch($req);
     }
+
+    public function startISRCSearch(ISRCSearchRequest $req): SearchFuture
+    {
+        return $this->internalStartSearch($req);
+    }
 }
