@@ -11,6 +11,11 @@ class PexSearchClient extends BaseClient
 
     public function startSearch(PexSearchRequest $req): SearchFuture
     {
-        return $this->internalStartSearch($req->getFingerprint(), $req->getType());
+        return $this->internalStartSearch($req);
+    }
+
+    public function startISRCSearch(ISRCSearchRequest $req): SearchFuture
+    {
+        return $this->internalStartSearch($req);
     }
 }
