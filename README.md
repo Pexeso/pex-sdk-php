@@ -13,7 +13,7 @@ You can install the PHP language bindings like this:
     composer config repositories.repo-name vcs https://github.com/Pexeso/pex-sdk-php
 
     # Install the SDK bindings package
-    composer require pexeso/pex-sdk-php:dev-main
+    composer require pexeso/pex-sdk-php:4.7.0
 
 
 ### Usage examples
