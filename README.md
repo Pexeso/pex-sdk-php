@@ -1,9 +1,9 @@
-[![docs](https://img.shields.io/badge/docs-reference-blue.svg)](https://docs.search.pex.com/php/)
+[![docs](https://img.shields.io/badge/docs-reference-blue.svg)](https://docs.pex.com/search/)
 [![Language](https://img.shields.io/badge/Language-PHP-blue.svg)](https://php.net/)
 
 # Pex SDK for PHP
 
-PHP bindings for the [Pex SDK](https://docs.search.pex.com).
+PHP bindings for the [Pex SDK](https://docs.pex.com/search/).
 
 ### Installation
 
